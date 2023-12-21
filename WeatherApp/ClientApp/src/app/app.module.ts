@@ -6,26 +6,21 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './pages/home/home.component';
-import { FetchDataComponent } from './pages/fetch-data/fetch-data.component';
 import { WeatherComponent } from './pages/weather/weather.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
-    HomeComponent,
-    FetchDataComponent,
-    WeatherComponent
+    WeatherComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'weather', component: WeatherComponent },
+      { path: '', component: WeatherComponent, pathMatch: 'full' },
     ])
   ],
   providers: [],
