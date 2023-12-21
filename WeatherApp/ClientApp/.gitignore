@@ -1,0 +1,36 @@
+# .gitignore for WeatherApp
+
+# Node modules folder
+node_modules/
+
+# Application build output folder
+dist/
+
+# Configuration folder
+.ejected/
+
+# Local configuration files
+*.json
+*.xml
+*.log
+*.suo
+
+# Environment configuration
+.env
+
+# Backup files
+*~
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+
+# IDE configuration files
+.idea/
+
+# IDE-specific folders
+.vscode/
+
+# Angular folder
+.angular/
