@@ -1,0 +1,40 @@
+﻿# Binary folders
+bin/
+obj/
+
+# Build output folders
+Debug/
+Release/
+
+# NuGet package folder
+*.nuget/
+
+# Local configuration files
+*.json
+*.xml
+*.user
+*.suo
+*.cache
+*.log
+*.vscode
+.vs/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+
+# Environment configuration
+.env
+
+# Backup files
+*~
+
+# IDE configuration files
+*.swp
+.DS_Store
