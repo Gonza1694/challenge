@@ -1,0 +1,39 @@
+.content__query{
+  margin-bottom: 1rem;
+}
+.query__select {
+  width: 15rem;
+  padding: 0.3rem;
+  margin-right: 1.5rem;
+}
+
+.query__label {
+  margin-left: 0.5rem;
+  margin-right: 1rem;
+}
+
+.query__btn{
+  margin: 0 1rem;
+}
+
+.content__data {
+  display: flex;
+  margin-bottom: 1rem;
+  flex-direction: column;
+}
+
+table {
+  font-family: Arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #f2f2f2;
+}
