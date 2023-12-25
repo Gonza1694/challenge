@@ -7,19 +7,24 @@ import { WeatherService } from '../../services/weather.service';
   styleUrls: ['./weather.component.css'],
 })
 export class WeatherComponent implements OnInit {
-  city = 'Nueva York';
+  selectedCity: string = "";
   weatherData: any;
+
+  cities: string[] = ["San Miguel de Tucumán", "Buenos Aires"];
 
   constructor(private weatherService: WeatherService) { }
 
   ngOnInit() {
-    this.getWeather();
   }
 
   getWeather() {
-    this.weatherService.getWeather(this.city).subscribe((data) => {
-      this.weatherData = data;
-      console.log(this.weatherData);
-    });
+    if (this.selectedCity) {
+      this.weatherService.getWeather(this.selectedCity).subscribe((data) => {
+        this.weatherData = data;
+        console.log(this.weatherData);
+      });
+    } else {
+      alert("Por favor, seleccione una ciudad antes de consultar.");
+    }
   }
 }
