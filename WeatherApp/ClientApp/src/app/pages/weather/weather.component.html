@@ -2,21 +2,21 @@
 
   <div class="content__query">
 
-    <select name="city" class="query__select">      
-      <option defaultvalue="">Seleccione la Ciudad</option>
-      <option value="">Tucuman</option>
+    <select name="city" class="query__select" [(ngModel)]="selectedCity">
+      <option value="" disabled selected>Seleccione la Ciudad</option>
+      <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
     </select>
 
     <input type="checkbox" name="historic" class="query__check" />
     <label class="query__label" for="historic">Incluir histórico</label>
 
-    <button class="query__btn">Consultar</button>
+    <button id="query__btn" class="query__btn" (click)="getWeather()">Consultar</button>
 
   </div>
 
-  <div class="content__data">
-    <label class="data__label">Ciudad: Buenos Aires, Argentina</label>
-    <label class="data__label">Clima: 31,6° - Sensacion Termica: 33°</label>
+  <div class="content__data" *ngIf="weatherData">
+    <label class="data__label">Ciudad: {{ weatherData.name }}, {{ weatherData.sys.country }}</label>
+    <label class="data__label">Clima: {{ weatherData.main.temp }}° - Sensación Térmica: {{ weatherData.main.feels_Like }}°</label>
   </div>
 
   <div class="content__table">
@@ -48,3 +48,5 @@
   </div>
 
 </div>
+
+<!--*ngIf="weatherHistoric"-->
