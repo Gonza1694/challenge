@@ -15,10 +15,8 @@ public class WeatherController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetWeatherByCityAsync()
+    public async Task<IActionResult> GetWeatherByCityAsync(string city)
     {
-        var city = "Buenos Aires";
-
         try
         {
             var cityCoordinates = await _geocodingService.GetCityCoordinates(city);
