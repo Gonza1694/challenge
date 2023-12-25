@@ -13,16 +13,14 @@ public class GeocodingController : ControllerBase
     }
 
     [HttpGet(Name = "GetWeatherForecast")]
-    public async Task<ActionResult<object>> Get()
+    public async Task<ActionResult<object>> Get(string city)
     {
-        var city = "Buenos Aires";
-
         try
         {
             var cityCoordinates = await _geocodingService.GetCityCoordinates(city);
             return Ok(cityCoordinates);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return StatusCode(500, "Internal Server Error");
         }
