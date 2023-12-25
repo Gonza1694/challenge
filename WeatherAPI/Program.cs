@@ -1,41 +1,67 @@
+using Microsoft.EntityFrameworkCore;
+using WeatherAPI.Data;
+using WeatherAPI.Data.Repositories;
 using WeatherAPI.Services;
+using WeatherAPI.Utils;
 
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddHttpClient();
-
-builder.Services.AddScoped<IGeocodingService, GeocodingService>(provider =>
+internal class Program
 {
-    var apiKey = "56025b0ebe4fbe40a1e325304e2669ef";
-    return new GeocodingService(provider.GetRequiredService<IHttpClientFactory>(), apiKey);
-});
+    private static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<IWeatherService, WeatherService>(provider =>
-{
-    var apiKey = "56025b0ebe4fbe40a1e325304e2669ef";
-    return new WeatherService(provider.GetRequiredService<IHttpClientFactory>(), apiKey);
-});
+        string apiKey = "56025b0ebe4fbe40a1e325304e2669ef";
 
-var app = builder.Build();
+        builder.Services.AddDbContext<WeatherDbContext>(options =>
+        {
+            options.UseSqlServer(ConnectionString.GetSQLString);
+        });
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+        builder.Services.AddControllers();
+
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowWeatherApp",
+                builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+        });
+
+        builder.Services.AddHttpClient();
+
+        builder.Services.AddScoped<WeatherRepository>();
+
+        builder.Services.AddScoped<IGeocodingService, GeocodingService>(provider =>
+        {
+            return new GeocodingService(provider.GetRequiredService<IHttpClientFactory>(), apiKey);
+        });
+
+        builder.Services.AddScoped<IWeatherService, WeatherService>(provider =>
+        {
+            var httpClientFactory = provider.GetRequiredService<IHttpClientFactory>();
+            var weatherRepository = provider.GetRequiredService<WeatherRepository>();
+
+            return new WeatherService(httpClientFactory, apiKey, weatherRepository);
+        });
+
+        var app = builder.Build();
+
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
+        app.UseCors("AllowWeatherApp");
+
+        app.UseHttpsRedirection();
+        app.UseAuthorization();
+        app.MapControllers();
+
+        app.Run();
+    }
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
