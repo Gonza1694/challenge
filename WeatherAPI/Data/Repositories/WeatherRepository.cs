@@ -1,4 +1,5 @@
-﻿using WeatherAPI.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using WeatherAPI.Models;
 
 namespace WeatherAPI.Data.Repositories
 {
@@ -15,6 +16,7 @@ namespace WeatherAPI.Data.Repositories
         {
             var historicData = new WeatherHistoric
             {
+                Country = weatherData.Sys.Country,
                 City = weatherData.Name,
                 Temperature = weatherData.Main.Temp,
                 Feels_Like = weatherData.Main.Feels_Like,
@@ -23,6 +25,17 @@ namespace WeatherAPI.Data.Repositories
 
             _dbContext.WeatherHistorics.Add(historicData);
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<WeatherHistoric>> GetHistoricWeatherAsync(string city)
+        {
+            var historicWeather = await _dbContext.WeatherHistorics
+                .Where(h => h.City == city)
+                .OrderByDescending(h => h.Timestamp)
+                .Take(10)
+                .ToListAsync();
+
+            return historicWeather;
         }
     }
 }
