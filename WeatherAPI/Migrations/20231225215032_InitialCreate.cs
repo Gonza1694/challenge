@@ -17,6 +17,7 @@ namespace WeatherAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Temperature = table.Column<double>(type: "float", nullable: false),
                     Feels_Like = table.Column<double>(type: "float", nullable: false),
