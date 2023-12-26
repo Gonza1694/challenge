@@ -48,6 +48,8 @@ internal class Program
             return new WeatherService(httpClientFactory, apiKey, weatherRepository);
         });
 
+        builder.Services.AddScoped<IHistoricService, HistoricService>();
+
         var app = builder.Build();
 
         if (app.Environment.IsDevelopment())
