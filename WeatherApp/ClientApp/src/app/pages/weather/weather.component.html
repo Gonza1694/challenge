@@ -7,19 +7,25 @@
       <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
     </select>
 
-    <input type="checkbox" name="historic" class="query__check" />
-    <label class="query__label" for="historic">Incluir histórico</label>
+    <input type="checkbox" name="historic" class="query__check" [(ngModel)]="showHistoric" />
+    <label class="query__label" for="historic">
+      Incluir histórico
+    </label>
 
     <button id="query__btn" class="query__btn" (click)="getWeather()">Consultar</button>
 
   </div>
 
-  <div class="content__data" *ngIf="weatherData">
+  <div *ngIf="loading" class="spinner"></div>
+
+  <div class="content__data" *ngIf="weatherData && !loading">
     <label class="data__label">Ciudad: {{ weatherData.name }}, {{ weatherData.sys.country }}</label>
     <label class="data__label">Clima: {{ weatherData.main.temp }}° - Sensación Térmica: {{ weatherData.main.feels_Like }}°</label>
   </div>
 
-  <div class="content__table">
+  <div *ngIf="loading && showHistoric" class="spinner"></div>
+
+  <div class="content__table" *ngIf="showHistoric && !loading && weatherHistoric?.length != 0 ">
 
     <table>
       <thead class="table__header">
@@ -31,22 +37,14 @@
         </tr>
       </thead>
       <tbody class="table__body">
-        <tr>
-          <td>Argentina</td>
-          <td>Buenos Aires</td>
-          <td>31.6°</td>
-          <td>33°</td>
-        </tr>
-        <tr>
-          <td>Argentina</td>
-          <td>Buenos Aires</td>
-          <td>28.2°</td>
-          <td>27°</td>
+        <tr *ngFor="let historic of weatherHistoric">
+          <td>{{ historic.country }}</td>
+          <td>{{ historic.city }}</td>
+          <td>{{ historic.temperature }}°</td>
+          <td>{{ historic.feels_Like }}°</td>
         </tr>
       </tbody>
     </table>
   </div>
 
 </div>
-
-<!--*ngIf="weatherHistoric"-->
