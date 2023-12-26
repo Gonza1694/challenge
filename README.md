@@ -2,9 +2,10 @@
 Este proyecto consta de una API en .NET para obtener información del clima y una aplicación web en Angular para mostrarla.
 
 ## Requisitos previos
-- .NET SDK (para ejecutar la API)
-- Node.js y npm (para ejecutar la aplicación web)
-- Angular CLI (instalado de forma global)
+- .NET SDK
+- Node.js y npm
+- Angular CLI
+- Microsoft SQL Server
 
 ## Configuración
 - Clona el repositorio:
@@ -22,7 +23,18 @@ dotnet restore
 ```
 dotnet build
 ```
-
+### Base de datos
+- Navegar hasta la ruta `/WeatherAPI/Utils/ConnectionString.cs` y modificar los siguientes campos:
+```
+Server = @"SERVER NAME"
+DB = @"DB NAME"
+User = @"USER"
+Password = @"PASS"
+```
+- Luego en la terminal ejecutar el siguiente comando
+```
+dotnet ef database update
+```
 ### APP
 ```
 cd /WeatherApp/ClientApp
