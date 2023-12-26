@@ -12,7 +12,7 @@ public class GeocodingController : ControllerBase
         _geocodingService = geocodingService;
     }
 
-    [HttpGet(Name = "GetWeatherForecast")]
+    [HttpGet]
     public async Task<ActionResult<object>> Get(string city)
     {
         try
