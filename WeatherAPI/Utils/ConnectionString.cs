@@ -2,11 +2,11 @@
 {
     public class ConnectionString
     {
-        private const string Server = @"GON\WEATHER";
+        private const string Server = @"SERVER NAME";
 
-        private const string DB = @"WeatherDB";
-        private const string User = @"sa";
-        private const string Password = @"1398632";
+        private const string DB = @"DB NAME";
+        private const string User = @"USER";
+        private const string Password = @"PASS";
 
         public static string GetSQLString => $"Data Source={Server};" +
                                                  $"Initial Catalog={DB}; " +
